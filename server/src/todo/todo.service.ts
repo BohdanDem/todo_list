@@ -21,18 +21,21 @@ export class TodoService {
       .createQueryBuilder('todos');
 
     const defaultQueryLimit = 10;
+    const defaultQueryPage = 1;
     const queryLimit = query.limit ? Number(query.limit) : defaultQueryLimit;
-    const offsetPage = query.page ? Number(query.page - 1) * queryLimit : 0;
+    const offsetPage = query.page
+      ? Number(query.page - defaultQueryPage) * queryLimit
+      : 0;
     queryBuilder.limit(queryLimit);
     queryBuilder.offset(offsetPage);
 
-    const todoCount = await queryBuilder.getCount();
-    const todoCountPerPage =
-      todoCount >= defaultQueryLimit ? queryLimit : todoCount;
-    const page = offsetPage + 1;
-
     queryBuilder.orderBy('todos.createdAt', 'DESC');
     const todos = await queryBuilder.getMany();
+    const todoCount = await queryBuilder.getCount();
+
+    const todoCountPerPage = todos.length;
+    const page = query.page ? Number(query.page) : defaultQueryPage;
+
     return { todoCount, todoCountPerPage, page, todos };
   }
 
