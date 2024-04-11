@@ -1,20 +1,39 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { TodoEntity } from '../database/entities/todo.entity';
-import { Repository, DeleteResult } from 'typeorm';
+import { Repository, DeleteResult, DataSource } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { StateEnum } from '../common/enum/todo.enum';
 import { CreateTodoDto } from './dto/createTodo.dto';
 import { TodoResponseInterface } from './types/todoResponse.interface';
 import { UpdateTodoDto } from './dto/updateTodo.dto';
+import { TodosResponseInterface } from './types/todosResponse.interface';
 
 @Injectable()
 export class TodoService {
   constructor(
     @InjectRepository(TodoEntity)
     private readonly todoRepository: Repository<TodoEntity>,
+    private dataSource: DataSource,
   ) {}
-  async getAllTodos(): Promise<TodoEntity[]> {
-    return await this.todoRepository.find();
+  async getAllTodos(query: any): Promise<TodosResponseInterface> {
+    const queryBuilder = this.dataSource
+      .getRepository(TodoEntity)
+      .createQueryBuilder('todos');
+
+    const defaultQueryLimit = 10;
+    const queryLimit = query.limit ? Number(query.limit) : defaultQueryLimit;
+    const offsetPage = query.page ? Number(query.page - 1) * queryLimit : 0;
+    queryBuilder.limit(queryLimit);
+    queryBuilder.offset(offsetPage);
+
+    const todoCount = await queryBuilder.getCount();
+    const todoCountPerPage =
+      todoCount >= defaultQueryLimit ? queryLimit : todoCount;
+    const page = offsetPage + 1;
+
+    queryBuilder.orderBy('todos.createdAt', 'DESC');
+    const todos = await queryBuilder.getMany();
+    return { todoCount, todoCountPerPage, page, todos };
   }
 
   async getTodo(id: string): Promise<TodoEntity> {

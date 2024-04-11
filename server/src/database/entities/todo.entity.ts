@@ -1,4 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+} from 'typeorm';
 import { StateEnum } from '../../common/enum/todo.enum';
 
 @Entity({ name: 'todos' })
@@ -14,4 +19,7 @@ export class TodoEntity {
 
   @Column({ type: 'enum', enum: StateEnum })
   state: StateEnum;
+
+  @CreateDateColumn({ name: 'createdAt' })
+  createdAt: Date;
 }

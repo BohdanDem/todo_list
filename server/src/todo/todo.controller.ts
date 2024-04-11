@@ -6,31 +6,29 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
-import { TodoEntity } from '../database/entities/todo.entity';
 import { CreateTodoDto } from './dto/createTodo.dto';
 import { TodoResponseInterface } from './types/todoResponse.interface';
 import { DeleteResult } from 'typeorm';
 import { UpdateTodoDto } from './dto/updateTodo.dto';
+import { TodosResponseInterface } from './types/todosResponse.interface';
 
 @Controller('todos')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
   @Get()
-  async getAllTodos(): Promise<{ todos: TodoEntity[] }> {
-    const todos = await this.todoService.getAllTodos();
-    return {
-      todos: todos,
-    };
+  async getAllTodos(@Query() query: any): Promise<TodosResponseInterface> {
+    return await this.todoService.getAllTodos(query);
   }
 
   @Get(':id')
   async getTodo(@Param('id') id: string): Promise<TodoResponseInterface> {
-    const article = await this.todoService.getTodo(id);
-    return this.todoService.buildTodoResponse(article);
+    const todo = await this.todoService.getTodo(id);
+    return this.todoService.buildTodoResponse(todo);
   }
 
   @Post()
