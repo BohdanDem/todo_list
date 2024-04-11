@@ -1,12 +1,14 @@
-export interface ITodoCreate{
-    todo: {
-        title: string;
-        description: string;
-        state: string
-    }
+export interface ITodo {
+    title: string;
+    description: string;
+    state?: string
 }
 
-export interface ITodoRes{
+export interface ITodoCreate {
+    todo: ITodo
+}
+
+export interface ITodoRes {
     id: string;
     title: string;
     description: string;

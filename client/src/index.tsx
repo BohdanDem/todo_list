@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import './index.css';
+import css from './index.module.css';
 import {store} from "./redux/store";
 import TodoForm from "./components/TodoForm/TodoForm";
 import Todos from "./components/Todos/Todos";
@@ -11,10 +11,14 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <Provider store={store}>
-        <>
-            <TodoForm/>
-            <Todos/>
-            <Pagination/>
-        </>
+        <div className={css.main}>
+            <div>
+                <Todos/>
+                <Pagination/>
+            </div>
+            <div className={css.block_form}>
+                <TodoForm/>
+            </div>
+        </div>
     </Provider>
 );

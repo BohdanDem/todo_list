@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooks";
 import {todosActions} from "../../redux/slices/todosSlice";
+import Todo from "./Todo/Todo";
 
 const Todos = () => {
 
@@ -13,10 +14,7 @@ const Todos = () => {
 
     return (
         <div>
-            {todos && todos.map(todo => <div>
-                <div>{todo.title}</div>
-                <div>{todo.description}</div>
-            </div>)}
+            {todos && todos.map(todo => <Todo key={todo.id} todo={todo}/>)}
         </div>
     );
 };

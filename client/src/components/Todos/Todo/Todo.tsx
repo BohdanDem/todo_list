@@ -1,9 +1,20 @@
-import React from 'react';
+import React, {FC, PropsWithChildren} from 'react';
+import {ITodoRes} from "../../../interfaces/todo.interface";
+import css from './Todo.module.css'
 
-const Todo = () => {
+interface IProps extends PropsWithChildren {
+    todo: ITodoRes,
+}
+
+const Todo:FC<IProps> = ({todo}) => {
+
+    const { id, title, description, state} = todo
+
     return (
-        <div>
-            TodoEntity
+        <div className={css.container}>
+            <h4>title: {title}</h4>
+            <div>description: {description}</div>
+            <div>state: {state}</div>
         </div>
     );
 };

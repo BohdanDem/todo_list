@@ -1,0 +1,15 @@
+.container {
+    box-sizing: border-box;
+    width: 500px;
+    margin: 10px 50px;
+    padding: 15px;
+    font-size: 18px;
+    line-height: 1.5;
+    background-color: whitesmoke;
+    border: #b7b7b7 2px solid;
+    border-radius: 15px;
+}
+
+.container>h4 {
+    margin: 5px 0;
+}
