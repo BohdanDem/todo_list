@@ -66,7 +66,6 @@ const todosSlice = createSlice({
     reducers: {
         setNewPage: (state, action: PayloadAction<{ page: number }>) => {
             state.page = action.payload.page
-            console.log(state.page);
         }
     },
     extraReducers: builder => builder
