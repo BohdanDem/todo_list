@@ -18,6 +18,7 @@ export interface ITodoRes {
 
 export interface ITodosResponse {
     todoCount: number;
+    limit: number;
     todoCountPerPage: number;
     page: number;
     todos: ITodoRes[];

@@ -10,7 +10,7 @@ const Todos = () => {
 
     useEffect(() => {
         dispatch(todosActions.getAllTodos({page}))
-    }, [])
+    }, [dispatch, page])
 
     return (
         <div>

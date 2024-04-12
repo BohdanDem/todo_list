@@ -1,10 +1,11 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
 import {ITodoCreate, ITodosResponse} from "../../interfaces/todo.interface";
 import {todoService} from "../../services/todo.service";
 
 const initialState: ITodosResponse = {
     todoCount: null,
+    limit: null,
     todoCountPerPage: null,
     page: null,
     todos: [],
@@ -62,10 +63,16 @@ const deleteTodo = createAsyncThunk<void, {id: string}>(
 const todosSlice = createSlice({
     name: 'todosSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setNewPage: (state, action: PayloadAction<{ page: number }>) => {
+            state.page = action.payload.page
+            console.log(state.page);
+        }
+    },
     extraReducers: builder => builder
         .addCase(getAllTodos.fulfilled, (state, action) => {
             state.todoCount = action.payload.todoCount
+            state.limit = action.payload.limit
             state.todoCountPerPage = action.payload.todoCountPerPage
             state.page = action.payload.page
             state.todos = action.payload.todos

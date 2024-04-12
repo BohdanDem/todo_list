@@ -37,7 +37,7 @@ export class TodoService {
     const todoCountPerPage = todos.length;
     const page = query.page ? Number(query.page) : defaultQueryPage;
 
-    return { todoCount, todoCountPerPage, page, todos };
+    return { todoCount, limit: query.limit, todoCountPerPage, page, todos };
   }
 
   async getTodo(id: string): Promise<TodoEntity> {

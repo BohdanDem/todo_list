@@ -6,8 +6,16 @@
     font-size: 18px;
     line-height: 1.5;
     background-color: whitesmoke;
-    border: #b7b7b7 2px solid;
+    border: #e7f38e 3px solid;
     border-radius: 15px;
+}
+
+.in_progress {
+    border: #23a80e 3px solid;
+}
+
+.done {
+    border: #b7b7b7 3px solid;
 }
 
 .container>h4 {

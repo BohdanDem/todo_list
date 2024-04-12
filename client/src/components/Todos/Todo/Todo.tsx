@@ -32,7 +32,10 @@ const Todo:FC<IProps> = ({todo}) => {
     };
 
     return (
-        <div className={css.container}>
+        <div className={state === "очікує виконання" ?
+            css.container : state === "в процесі" ?
+                `${css.container} ${css.in_progress}`
+                : `${css.container} ${css.done}`}>
             <h4>title: {title}</h4>
             <div>description: {description}</div>
             <div className={css.dropdown}>

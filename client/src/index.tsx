@@ -13,8 +13,8 @@ root.render(
     <Provider store={store}>
         <div className={css.main}>
             <div>
-                <Todos/>
                 <Pagination/>
+                <Todos/>
             </div>
             <div className={css.block_form}>
                 <TodoForm/>
