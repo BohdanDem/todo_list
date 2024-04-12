@@ -16,12 +16,16 @@ import { TodoResponseInterface } from './types/todoResponse.interface';
 import { DeleteResult } from 'typeorm';
 import { UpdateTodoDto } from './dto/updateTodo.dto';
 import { TodosResponseInterface } from './types/todosResponse.interface';
+import { PaginationQueryTodoDto } from './dto/queryTodo.dto';
 
 @Controller('todos')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
   @Get()
-  async getAllTodos(@Query() query: any): Promise<TodosResponseInterface> {
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async getAllTodos(
+    @Query() query: PaginationQueryTodoDto,
+  ): Promise<TodosResponseInterface> {
     return await this.todoService.getAllTodos(query);
   }
 

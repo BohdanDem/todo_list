@@ -2,7 +2,7 @@
     box-sizing: border-box;
     width: 500px;
     margin: 10px 50px;
-    padding: 15px;
+    padding: 15px 15px 5px;
     font-size: 18px;
     line-height: 1.5;
     background-color: whitesmoke;
@@ -12,4 +12,34 @@
 
 .container>h4 {
     margin: 5px 0;
+}
+
+.dropdown {
+    display: flex;
+    flex-direction: row;
+}
+
+.select {
+    font-size: 16px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(215, 215, 215);
+}
+
+.button {
+    margin: 10px 5px;
+    padding: 5px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    border-radius: 15px;
+    border: none;
+    background-color: #a8a8a8;
+    transition: linear 0.15s;
+}
+
+.button:hover {
+    background-color: rgb(133, 133, 133);
+    transition: linear 0.15s;
 }

@@ -7,6 +7,7 @@ import { CreateTodoDto } from './dto/createTodo.dto';
 import { TodoResponseInterface } from './types/todoResponse.interface';
 import { UpdateTodoDto } from './dto/updateTodo.dto';
 import { TodosResponseInterface } from './types/todosResponse.interface';
+import { PaginationQueryTodoDto } from './dto/queryTodo.dto';
 
 @Injectable()
 export class TodoService {
@@ -15,24 +16,24 @@ export class TodoService {
     private readonly todoRepository: Repository<TodoEntity>,
     private dataSource: DataSource,
   ) {}
-  async getAllTodos(query: any): Promise<TodosResponseInterface> {
+  async getAllTodos(
+    query: PaginationQueryTodoDto,
+  ): Promise<TodosResponseInterface> {
     const queryBuilder = this.dataSource
       .getRepository(TodoEntity)
       .createQueryBuilder('todos');
 
-    const defaultQueryLimit = 10;
     const defaultQueryPage = 1;
-    const queryLimit = query.limit ? Number(query.limit) : defaultQueryLimit;
-    const offsetPage = query.page
-      ? Number(query.page - defaultQueryPage) * queryLimit
-      : 0;
-    queryBuilder.limit(queryLimit);
-    queryBuilder.offset(offsetPage);
+    const offset = query.page ? query.page - defaultQueryPage : 0;
 
+    if (query.limit) {
+      queryBuilder.limit(query.limit);
+    }
+    queryBuilder.offset(offset * query.limit);
     queryBuilder.orderBy('todos.createdAt', 'DESC');
+
     const todos = await queryBuilder.getMany();
     const todoCount = await queryBuilder.getCount();
-
     const todoCountPerPage = todos.length;
     const page = query.page ? Number(query.page) : defaultQueryPage;
 
